@@ -1,11 +1,11 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import apiRoutes from './api'
+import express from "express";
+import bodyParser from "body-parser";
+import categoryRoutes from "./api_categories";
 
-const server = express()
-server.use(bodyParser.urlencoded({extended: true}))
+const server = express();
+server.use(bodyParser.urlencoded({ extended: true }));
 
-  server.use('/products', apiRoutes)
+server.use("/categories", categoryRoutes);
 
 //   server.get('/', indexController)
 
@@ -19,4 +19,4 @@ server.use(bodyParser.urlencoded({extended: true}))
 
 //   server.post('/save', contactController)
 
-  server.listen(8040, () => console.log('server started'))
+server.listen(8040, () => console.log("server started"));
