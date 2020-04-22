@@ -2,12 +2,14 @@ import express from "express";
 import bodyParser from "body-parser";
 import categoryRoutes from "./api_categories";
 import productRoutes from "./api_products";
+import shoppingcardRoutes from "./api_shoppingcard";
 
 const server = express();
 server.use(bodyParser.urlencoded({ extended: true }));
 
 server.use("/categories", categoryRoutes);
 server.use("/products", productRoutes);
+server.use("/shoppingcard", shoppingcardRoutes);
 
 //   server.get('/', indexController)
 
