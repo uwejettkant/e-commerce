@@ -5,24 +5,35 @@ const router = Router();
 
 mongoose.connect("mongodb://localhost:27017/e-commerce");
 
-const categories = mongoose.model("categories", {
+const products = mongoose.model("products", {
   name: {
     type: String,
   },
   description: {
     type: String,
   },
+  price: {
+    type: Number,
+  },
+  categoryId: {
+    type: Number,
+  },
 });
 
 router.get("/", (request, response) => {
-  categories.find().then((data) => {
+  products.find().then((data) => {
     response.json(data);
   });
 });
 
-router.post("/add", (request, response) => {
-  categories
-    .create({ name: request.body.name, description: request.body.description })
+router.post("/", (request, response) => {
+  products
+    .create({
+      name: request.body.name,
+      description: request.body.description,
+      price: request.body.price,
+      categoryId: request.body.categoryId,
+    })
     .then(() => response.json({ created: true }))
     .catch(() => response.json({ created: false }));
 });
