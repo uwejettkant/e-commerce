@@ -1,21 +1,10 @@
 import { Router } from "express";
 import mongoose from "mongoose";
+import { categories } from "./models";
 
 const router = Router();
 
 mongoose.connect("mongodb://localhost:27017/e-commerce");
-
-const categories = mongoose.model("categories", {
-  name: {
-    type: String,
-  },
-  description: {
-    type: String,
-  },
-  id: {
-    type: Number,
-  },
-});
 
 router.get("/", (request, response) => {
   categories.find().then((data) => {

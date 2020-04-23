@@ -1,47 +1,41 @@
 import { Router } from "express";
 import mongoose from "mongoose";
+import { shoppingcart } from "./models";
+import { products } from "./models";
 
 const router = Router();
 
 mongoose.connect("mongodb://localhost:27017/e-commerce");
 
-const shoppingcard = mongoose.model("shoppingcard", {
-  name: {
-    type: String,
-  },
-  amount: {
-    type: Number,
-  },
-});
-
 router.get("/", (request, response) => {
-  shoppingcard.find().then((data) => {
+  shoppingcart.find().then((data) => {
     response.json(data);
   });
 });
 
-router.post("/", (request, response) => {
-  shoppingcard
-    .create({
-      name: request.body.name,
-      amount: request.body.amount,
+router.post("/:id", (request, response) => {
+  products
+    .findById(request.params.id)
+    .then(() => {
+      shoppingcart.create({
+        productId: request.params.id,
+        amount: request.body.amount,
+      });
     })
     .then(() => response.json({ created: true }))
     .catch(() => response.json({ created: false }));
 });
 
-router.put("/", (request, response) => {
-  shoppingcard
-    .create({
-      name: request.body.name,
+router.patch("/:id", (request, response) => {
+  shoppingcart
+    .findByIdAndUpdate(request.params.id, {
       amount: request.body.amount,
     })
-    .then(() => response.json({ created: true }))
-    .catch(() => response.json({ created: false }));
+    .then(() => response.json({ updated: true }));
 });
 
 router.delete("/:id", (request, response) => {
-  shoppingcard
+  shoppingcart
     .findByIdAndDelete(request.params.id)
     .then(() => response.json({ deleted: true }));
 });
