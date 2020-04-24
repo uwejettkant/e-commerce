@@ -25,5 +25,3 @@ router.post("/", (request, response) => {
 });
 
 export default router;
-
-//name: request.body.name, description: request.body.description

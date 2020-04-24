@@ -24,16 +24,9 @@ router.get("/", (request, response) => {
 });
 
 router.get("/:id", (request, response) => {
-  orders
-    .create({
-      name: request.body.name,
-      price: request.body.price,
-      quantity: request.body.quantity,
-      customerAdress: request.body.customerAdress,
-      totalPrice: request.body.totalPrice,
-    })
-    .then(() => response.json({ created: true }))
-    .catch(() => response.json({ created: false }));
+  orders.findById(request.params.id).then((data) => {
+    response.json(data);
+  });
 });
 
 export default router;

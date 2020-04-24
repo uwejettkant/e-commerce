@@ -12,7 +12,7 @@ export const categories = mongoose.model("categories", {
   },
 });
 
-export const products = mongoose.model("products", {
+const productSchema = {
   name: {
     type: String,
   },
@@ -25,7 +25,9 @@ export const products = mongoose.model("products", {
   categoryId: {
     type: Number,
   },
-});
+};
+
+export const products = mongoose.model("products", productSchema);
 
 export const shoppingcart = mongoose.model("shoppingcart", {
   productId: {
@@ -34,6 +36,7 @@ export const shoppingcart = mongoose.model("shoppingcart", {
   amount: {
     type: Number,
   },
+  product: productSchema,
 });
 
 export const orders = mongoose.model("orders", {

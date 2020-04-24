@@ -13,12 +13,12 @@ router.get("/", (request, response) => {
   });
 });
 
-router.post("/:id", (request, response) => {
+router.post("/", (request, response) => {
   products
-    .findById(request.params.id)
-    .then(() => {
+    .findById(request.body.productId)
+    .then((product) => {
       shoppingcart.create({
-        productId: request.params.id,
+        product: product,
         amount: request.body.amount,
       });
     })
