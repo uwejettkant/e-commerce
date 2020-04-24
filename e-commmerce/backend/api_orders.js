@@ -5,8 +5,6 @@ import { shoppingcart } from "./models";
 
 const router = Router();
 
-mongoose.connect("mongodb://localhost:27017/e-commerce");
-
 router.put("/:id", (request, response) => {
   shoppingcart
     .findById(request.params.id)

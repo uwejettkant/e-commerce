@@ -4,8 +4,6 @@ import { products } from "./models";
 
 const router = Router();
 
-mongoose.connect("mongodb://localhost:27017/e-commerce");
-
 router.get("/", (request, response) => {
   products.find().then((data) => {
     response.json(data);

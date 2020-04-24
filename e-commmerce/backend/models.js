@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+mongoose.connect("mongodb://localhost:27017/e-commerce");
+
 export const categories = mongoose.model("categories", {
   name: {
     type: String,
