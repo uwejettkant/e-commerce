@@ -32,7 +32,9 @@ export default function Products() {
   }
 
   return (
-    <section>
+    <>
+    <header>Products</header>
+    <main>
       {products.map((product) => (
         <ul key={product._id}>
           <li>{product.name}</li>
@@ -49,7 +51,8 @@ export default function Products() {
           </button>
         </ul>
       ))}
-    </section>
+    </main>
+    </>
   );
   function changeAmount(event) {
     setAmount(event.target.value);

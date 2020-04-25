@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 export default function ShoppingCart() {
   const [shoppingCart, setShoppingCart] = useState([]);
+  const [amountUpdate, setAmountUpdate] = useState("")
 
   useEffect(() => {
     fetch("http://localhost:8040/shoppingcart")
@@ -9,15 +10,42 @@ export default function ShoppingCart() {
       .then((data) => setShoppingCart(data));
   }, []);
 
+  function updateAmount(amountUpdate, productId){
+    const urlencoded = new URLSearchParams();
+        urlencoded.append("amount", amountUpdate);
+        urlencoded.append("productId", productId);
+
+    const requestOptions = {
+        method: 'PATCH',
+        body: urlencoded,
+        redirect: 'follow'
+      };
+
+fetch("http://localhost:8040/shoppingcart", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+  } 
+
   return (
-    <section>
+    <>
+    <header>Shopping Cart</header>
+    <main>
       {shoppingCart.map((cart) => (
         <ul key={cart._id}>
           <li>
-            {cart.product && cart.product.name} {cart.amount}
+            {cart.product && cart.product.name} 
+            <input placeholder={cart.amount} onChange={handleAmountUpdate} />
+            <button onClick={() => updateAmount(amountUpdate, cart.productId)}>update amount</button>
+            {console.log(amountUpdate)}
           </li>
         </ul>
       ))}
-    </section>
+    </main>
+    </>
   );
+
+  function handleAmountUpdate(event) {
+    setAmountUpdate(event.target.value)
+  }
 }

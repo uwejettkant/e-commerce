@@ -1,5 +1,4 @@
 import { Router } from "express";
-import mongoose from "mongoose";
 import { shoppingcart } from "./models";
 import { products } from "./models";
 
@@ -17,6 +16,7 @@ router.post("/", (request, response) => {
     .then((product) => {
       shoppingcart.create({
         product: product,
+        productId: request.body.productId,
         amount: request.body.amount,
       });
     })
@@ -24,17 +24,17 @@ router.post("/", (request, response) => {
     .catch(() => response.json({ created: false }));
 });
 
-router.patch("/:id", (request, response) => {
+router.patch("/", (request, response) => {
   shoppingcart
-    .findByIdAndUpdate(request.params.id, {
+    .findByIdAndUpdate(request.body.productId, {
       amount: request.body.amount,
     })
     .then(() => response.json({ updated: true }));
 });
 
-router.delete("/:id", (request, response) => {
+router.delete("/", (request, response) => {
   shoppingcart
-    .findByIdAndDelete(request.params.id)
+    .findByIdAndDelete(request.body.productId)
     .then(() => response.json({ deleted: true }));
 });
 
