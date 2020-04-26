@@ -26,7 +26,7 @@ router.post("/", (request, response) => {
 
 router.patch("/", (request, response) => {
   shoppingcart
-    .findByIdAndUpdate(request.body.productId, {
+    .findByIdAndUpdate(request.body.cartId, {
       amount: request.body.amount,
     })
     .then(() => response.json({ updated: true }));

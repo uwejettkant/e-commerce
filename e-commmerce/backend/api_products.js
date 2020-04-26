@@ -1,10 +1,16 @@
 import { Router } from "express";
-import { products } from "./models";
+import { products, categories } from "./models";
 
 const router = Router();
 
 router.get("/", (request, response) => {
   products.find().then((data) => {
+    response.json(data);
+  });
+});
+
+router.get("/filtered", (request, response) => {
+  products.find(request.body.categoryId).then((data) => {
     response.json(data);
   });
 });

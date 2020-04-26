@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import GlobalStyles from "./GlobalStyles";
 import Home from "./Home";
 import Footer from "./Footer";
@@ -7,21 +7,27 @@ import { Route, Switch } from "react-router-dom";
 import ShoppingCart from "./ShoppingCart";
 
 export default function App() {
+  const [categorySelected, setCategorySelected] = useState("");
+
   return (
     <>
       <GlobalStyles />
       <Switch>
         <Route exact path="/">
-          <Home />
+          <Home clickCategory={setCategory} />
         </Route>
         <Route path="/products">
-          <Products />
+          <Products categorySelected={categorySelected} />
         </Route>
         <Route path="/shoppingcart">
           <ShoppingCart />
         </Route>
       </Switch>
-      <Footer />
+      <Footer setCategorySelected={setCategorySelected} />
     </>
   );
+
+  function setCategory(categoryId) {
+    setCategorySelected(categoryId);
+  }
 }

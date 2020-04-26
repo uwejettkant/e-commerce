@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-export default function Products() {
+export default function Products({ categorySelected }) {
   const [products, setProducts] = useState([]);
   const [amount, setAmount] = useState("1");
 
@@ -33,25 +34,51 @@ export default function Products() {
 
   return (
     <>
-    <header>Products</header>
-    <main>
-      {products.map((product) => (
-        <ul key={product._id}>
-          <li>{product.name}</li>
-          <ul>
-            <li>{product.description}</li>
-            <li>{product.price} €</li>
-          </ul>
-          <form>
-            <label htmlFor="amount">Amount</label>
-            <input onChange={(event) => changeAmount(event)} id="amount" />
-          </form>
-          <button onClick={() => addToCart(product._id, amount)}>
-            Add to Cart
-          </button>
-        </ul>
-      ))}
-    </main>
+      <header>Products</header>
+      <main>
+        {products.map((product) => (
+          <div key={product._id}>
+            {categorySelected === product.categoryId && (
+              <>
+                <h3>{product.name}</h3>
+                <ul>
+                  <li>{product.description}</li>
+                  <li>{product.price} €</li>
+                </ul>
+                <form>
+                  <label htmlFor="amount">Amount</label>
+                  <input
+                    onChange={(event) => changeAmount(event)}
+                    id="amount"
+                  />
+                </form>
+                <button onClick={() => addToCart(product._id, amount)}>
+                  <Link to="/shoppingcart">Add to Cart</Link>
+                </button>
+              </>
+            )}
+            {categorySelected === "" && (
+              <>
+                <h3>{product.name}</h3>
+                <ul>
+                  <li>{product.description}</li>
+                  <li>{product.price} €</li>
+                </ul>
+                <form>
+                  <label htmlFor="amount">Amount</label>
+                  <input
+                    onChange={(event) => changeAmount(event)}
+                    id="amount"
+                  />
+                </form>
+                <button onClick={() => addToCart(product._id, amount)}>
+                  <Link to="/shoppingcart">Add to Cart</Link>
+                </button>
+              </>
+            )}
+          </div>
+        ))}
+      </main>
     </>
   );
   function changeAmount(event) {
