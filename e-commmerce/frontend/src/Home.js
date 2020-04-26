@@ -32,7 +32,7 @@ export default function Home({ clickCategory }) {
               <h2>{category.name}</h2>
               <p>{category.description}</p>
               <ButtonStyled onClick={() => clickCategory(category.id)}>
-                <Link to="/products">See Products</Link>
+                <LinkStyled to="/products">See Products</LinkStyled>
               </ButtonStyled>
             </Card>
           ))}
@@ -42,7 +42,7 @@ export default function Home({ clickCategory }) {
   );
 }
 
-const CenteredContainer = styled.section`
+const CenteredContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -82,4 +82,8 @@ const ButtonStyled = styled.button`
   border-radius: 10px;
   font-size: 0.75em;
   font-weight: bold;
+`;
+const LinkStyled = styled(Link)`
+  text-decoration: none;
+  color: white;
 `;
