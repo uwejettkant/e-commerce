@@ -1,44 +1,44 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import Hoodiew from "./images/product_hoodiew.jpg";
-import Hoodiem from "./images/product_hoodiem.jpg";
-import Jeansbluew from "./images/product_jeansbluew.jpg";
-import Jeansgreyw from "./images/product_jeansgreyw.jpg";
-import Jeansbluem from "./images/product_jeansm.jpg";
-import Tanktopm from "./images/product_tanktopm.jpg";
-import Shirtm from "./images/product_shirtm.jpg";
-import Shirtw from "./images/product_shirtw.jpg";
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+import Hoodiew from './images/product_hoodiew.jpg'
+import Hoodiem from './images/product_hoodiem.jpg'
+import Jeansbluew from './images/product_jeansbluew.jpg'
+import Jeansgreyw from './images/product_jeansgreyw.jpg'
+import Jeansbluem from './images/product_jeansm.jpg'
+import Tanktopm from './images/product_tanktopm.jpg'
+import Shirtm from './images/product_shirtm.jpg'
+import Shirtw from './images/product_shirtw.jpg'
 
 export default function Products({ categorySelected }) {
-  const [products, setProducts] = useState([]);
-  const [amount, setAmount] = useState("1");
+  const [products, setProducts] = useState([])
+  const [amount, setAmount] = useState('1')
 
   useEffect(() => {
-    fetch("http://localhost:8040/products")
+    fetch('http://localhost:8040/products')
       .then((res) => res.json())
-      .then((data) => setProducts(data));
-  }, []);
+      .then((data) => setProducts(data))
+  }, [])
 
   function addToCart(productId, amount) {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    const myHeaders = new Headers()
+    myHeaders.append('Content-Type', 'application/x-www-form-urlencoded')
 
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("amount", amount);
-    urlencoded.append("productId", productId);
+    const urlencoded = new URLSearchParams()
+    urlencoded.append('amount', amount)
+    urlencoded.append('productId', productId)
 
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
       body: urlencoded,
-      redirect: "follow",
-    };
+      redirect: 'follow',
+    }
 
-    fetch("http://localhost:8040/shoppingcart/", requestOptions)
+    fetch('http://localhost:8040/shoppingcart/', requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error))
   }
 
   return (
@@ -49,28 +49,28 @@ export default function Products({ categorySelected }) {
           <CenteredContainer key={product._id}>
             {categorySelected === product.categoryId && (
               <Card>
-                {product._id === "5ea05d76b9130b381db647c7" && (
+                {product._id === '5ea05d76b9130b381db647c7' && (
                   <img src={Jeansgreyw} alt="jeans grey female" />
                 )}
-                {product._id === "5ea05d99b9130b381db647c8" && (
+                {product._id === '5ea05d99b9130b381db647c8' && (
                   <img src={Jeansbluew} alt="jeans blue female" />
                 )}
-                {product._id === "5ea05dbfb9130b381db647c9" && (
+                {product._id === '5ea05dbfb9130b381db647c9' && (
                   <img src={Jeansbluem} alt="jeans blue men" />
                 )}
-                {product._id === "5ea05e15b9130b381db647ca" && (
+                {product._id === '5ea05e15b9130b381db647ca' && (
                   <img src={Tanktopm} alt="tanktop men" />
                 )}
-                {product._id === "5ea05e2bb9130b381db647cb" && (
+                {product._id === '5ea05e2bb9130b381db647cb' && (
                   <img src={Shirtw} alt="shirt female" />
                 )}
-                {product._id === "5ea05e38b9130b381db647cc" && (
+                {product._id === '5ea05e38b9130b381db647cc' && (
                   <img src={Shirtm} alt="shirt male" />
                 )}
-                {product._id === "5ea05e54b9130b381db647cd" && (
+                {product._id === '5ea05e54b9130b381db647cd' && (
                   <img src={Hoodiem} alt="hoodie male" />
                 )}
-                {product._id === "5ea05e70b9130b381db647ce" && (
+                {product._id === '5ea05e70b9130b381db647ce' && (
                   <img src={Hoodiew} alt="hoodie female" />
                 )}
                 <h3>{product.name}</h3>
@@ -80,40 +80,46 @@ export default function Products({ categorySelected }) {
                 </ul>
                 <form>
                   <label htmlFor="amount">Amount</label>
-                  <input
-                    onChange={(event) => changeAmount(event)}
-                    id="amount"
-                  />
+                  <select onChange={(event) => changeAmount(event)} id="amount">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                  </select>
                 </form>
                 <ButtonStyled onClick={() => addToCart(product._id, amount)}>
                   <LinkStyled to="/shoppingcart">Add to Cart</LinkStyled>
                 </ButtonStyled>
               </Card>
             )}
-            {categorySelected === "" && (
+            {categorySelected === '' && (
               <Card>
-                {product._id === "5ea05d76b9130b381db647c7" && (
+                {product._id === '5ea05d76b9130b381db647c7' && (
                   <img src={Jeansgreyw} alt="jeans grey female" />
                 )}
-                {product._id === "5ea05d99b9130b381db647c8" && (
+                {product._id === '5ea05d99b9130b381db647c8' && (
                   <img src={Jeansbluew} alt="jeans blue female" />
                 )}
-                {product._id === "5ea05dbfb9130b381db647c9" && (
+                {product._id === '5ea05dbfb9130b381db647c9' && (
                   <img src={Jeansbluem} alt="jeans blue men" />
                 )}
-                {product._id === "5ea05e15b9130b381db647ca" && (
+                {product._id === '5ea05e15b9130b381db647ca' && (
                   <img src={Tanktopm} alt="tanktop men" />
                 )}
-                {product._id === "5ea05e2bb9130b381db647cb" && (
+                {product._id === '5ea05e2bb9130b381db647cb' && (
                   <img src={Shirtw} alt="shirt female" />
                 )}
-                {product._id === "5ea05e38b9130b381db647cc" && (
+                {product._id === '5ea05e38b9130b381db647cc' && (
                   <img src={Shirtm} alt="shirt male" />
                 )}
-                {product._id === "5ea05e54b9130b381db647cd" && (
+                {product._id === '5ea05e54b9130b381db647cd' && (
                   <img src={Hoodiem} alt="hoodie male" />
                 )}
-                {product._id === "5ea05e70b9130b381db647ce" && (
+                {product._id === '5ea05e70b9130b381db647ce' && (
                   <img src={Hoodiew} alt="hoodie female" />
                 )}
                 <h3>{product.name}</h3>
@@ -123,10 +129,16 @@ export default function Products({ categorySelected }) {
                 </ul>
                 <form>
                   <label htmlFor="amount">Amount: </label>
-                  <input
-                    onChange={(event) => changeAmount(event)}
-                    id="amount"
-                  />
+                  <select onChange={(event) => changeAmount(event)} id="amount">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                  </select>
                 </form>
                 <ButtonStyled onClick={() => addToCart(product._id, amount)}>
                   <LinkStyled to="/shoppingcart">Add to Cart</LinkStyled>
@@ -137,9 +149,9 @@ export default function Products({ categorySelected }) {
         ))}
       </main>
     </>
-  );
+  )
   function changeAmount(event) {
-    setAmount(event.target.value);
+    setAmount(event.target.value)
   }
 }
 
@@ -147,7 +159,7 @@ const CenteredContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
+`
 const Card = styled.section`
   display: flex;
   flex-direction: column;
@@ -177,7 +189,7 @@ const Card = styled.section`
   input {
     width: 30px;
   }
-`;
+`
 
 const ButtonStyled = styled.button`
   background: #4e5c5b;
@@ -189,9 +201,9 @@ const ButtonStyled = styled.button`
   border-radius: 10px;
   font-size: 0.75em;
   font-weight: bold;
-`;
+`
 
 const LinkStyled = styled(Link)`
   text-decoration: none;
   color: white;
-`;
+`
