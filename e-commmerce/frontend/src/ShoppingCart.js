@@ -1,30 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 
 export default function ShoppingCart() {
-  const [shoppingCart, setShoppingCart] = useState([]);
-  const [amountUpdate, setAmountUpdate] = useState("");
+  const [shoppingCart, setShoppingCart] = useState([])
+  const [newAmount, setNewAmount] = useState('')
 
   useEffect(() => {
-    fetch("http://localhost:8040/shoppingcart")
+    fetch('http://localhost:8040/shoppingcart')
       .then((res) => res.json())
-      .then((data) => setShoppingCart(data));
-  }, []);
+      .then((data) => setShoppingCart(data))
+  }, [shoppingCart])
 
-  function updateAmount(amountUpdate, cartId) {
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("amount", amountUpdate);
-    urlencoded.append("cartId", cartId);
+  function updateAmount(newAmount, itemId) {
+    const urlencoded = new URLSearchParams()
+    urlencoded.append('amount', newAmount)
+    urlencoded.append('itemId', itemId)
 
     const requestOptions = {
-      method: "PATCH",
+      method: 'PATCH',
       body: urlencoded,
-      redirect: "follow",
-    };
+      redirect: 'follow',
+    }
 
-    fetch("http://localhost:8040/shoppingcart", requestOptions)
+    fetch('http://localhost:8040/shoppingcart', requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error))
+  }
+
+  function deleteProductFromShoppingCart(itemId) {
+    const urlencoded = new URLSearchParams()
+    urlencoded.append('itemId', itemId)
+
+    const requestOptions = {
+      method: 'DELETE',
+      body: urlencoded,
+      redirect: 'follow',
+    }
+
+    fetch('http://localhost:8040/shoppingcart', requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log('error', error))
   }
 
   return (
@@ -36,18 +52,21 @@ export default function ShoppingCart() {
             <li>
               {cart.product && cart.product.name}
               <input placeholder={cart.amount} onChange={handleAmountUpdate} />
-              <button onClick={() => updateAmount(amountUpdate, cart._id)}>
+              <button onClick={() => updateAmount(newAmount, cart._id)}>
                 update amount
               </button>
-              {console.log(amountUpdate)}
+              {console.log(newAmount)}
+              <button onClick={() => deleteProductFromShoppingCart(cart._id)}>
+                X
+              </button>
             </li>
           </ul>
         ))}
       </main>
     </>
-  );
+  )
 
   function handleAmountUpdate(event) {
-    setAmountUpdate(event.target.value);
+    setNewAmount(event.target.value)
   }
 }
