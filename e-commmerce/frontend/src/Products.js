@@ -12,7 +12,7 @@ import Shirtw from './images/product_shirtw.jpg'
 
 export default function Products({ categorySelected }) {
   const [products, setProducts] = useState([])
-  const [amount, setAmount] = useState('1')
+  const amount = 1
 
   useEffect(() => {
     fetch('http://localhost:8040/products')
@@ -78,19 +78,6 @@ export default function Products({ categorySelected }) {
                   <li>{product.description}</li>
                   <li>{product.price} €</li>
                 </ul>
-                <form>
-                  <label htmlFor="amount">Amount</label>
-                  <select onChange={(event) => changeAmount(event)} id="amount">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                  </select>
-                </form>
                 <ButtonStyled onClick={() => addToCart(product._id, amount)}>
                   <LinkStyled to="/shoppingcart">Add to Cart</LinkStyled>
                 </ButtonStyled>
@@ -127,19 +114,6 @@ export default function Products({ categorySelected }) {
                   <li>{product.description}</li>
                   <li>{product.price} €</li>
                 </ul>
-                <form>
-                  <label htmlFor="amount">Amount: </label>
-                  <select onChange={(event) => changeAmount(event)} id="amount">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                  </select>
-                </form>
                 <ButtonStyled onClick={() => addToCart(product._id, amount)}>
                   <LinkStyled to="/shoppingcart">Add to Cart</LinkStyled>
                 </ButtonStyled>
@@ -150,9 +124,6 @@ export default function Products({ categorySelected }) {
       </main>
     </>
   )
-  function changeAmount(event) {
-    setAmount(event.target.value)
-  }
 }
 
 const CenteredContainer = styled.div`

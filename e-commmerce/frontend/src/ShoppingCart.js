@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 
 export default function ShoppingCart() {
   const [shoppingCart, setShoppingCart] = useState([])
-  const [newAmount, setNewAmount] = useState('')
+  const [newAmount, setNewAmount] = useState(1)
 
   useEffect(() => {
     fetch('http://localhost:8040/shoppingcart')
       .then((res) => res.json())
       .then((data) => setShoppingCart(data))
-  }, [shoppingCart])
+  }, [setNewAmount])
 
   function updateAmount(newAmount, itemId) {
     const urlencoded = new URLSearchParams()
@@ -51,10 +51,25 @@ export default function ShoppingCart() {
           <ul key={cart._id}>
             <li>
               {cart.product && cart.product.name}
-              <input placeholder={cart.amount} onChange={handleAmountUpdate} />
-              <button onClick={() => updateAmount(newAmount, cart._id)}>
-                update amount
-              </button>
+              <form>
+                <label htmlFor="amount">Amount: </label>
+                <select
+                  onChange={(event) => {
+                    setNewAmount(event.target.value)
+                  }}
+                  value={updateAmount(newAmount, cart._id)}
+                  id="amount"
+                >
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                </select>
+              </form>
               {console.log(newAmount)}
               <button onClick={() => deleteProductFromShoppingCart(cart._id)}>
                 X
@@ -65,8 +80,4 @@ export default function ShoppingCart() {
       </main>
     </>
   )
-
-  function handleAmountUpdate(event) {
-    setNewAmount(event.target.value)
-  }
 }
