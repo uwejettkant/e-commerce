@@ -1,16 +1,16 @@
-import { Router } from "express";
-import { shoppingcart } from "./models";
-import { products } from "./models";
+import { Router } from 'express'
+import { shoppingcart } from './models'
+import { products } from './models'
 
-const router = Router();
+const router = Router()
 
-router.get("/", (request, response) => {
+router.get('/', (request, response) => {
   shoppingcart.find().then((data) => {
-    response.json(data);
-  });
-});
+    response.json(data)
+  })
+})
 
-router.post("/", (request, response) => {
+router.post('/', (request, response) => {
   products
     .findById(request.body.productId)
     .then((product) => {
@@ -18,24 +18,24 @@ router.post("/", (request, response) => {
         product: product,
         productId: request.body.productId,
         amount: request.body.amount,
-      });
+      })
     })
     .then(() => response.json({ created: true }))
-    .catch(() => response.json({ created: false }));
-});
+    .catch(() => response.json({ created: false }))
+})
 
-router.patch("/", (request, response) => {
+router.patch('/', (request, response) => {
   shoppingcart
-    .findByIdAndUpdate(request.body.cartId, {
+    .findByIdAndUpdate(request.body.itemId, {
       amount: request.body.amount,
     })
-    .then(() => response.json({ updated: true }));
-});
+    .then(() => response.json({ updated: true }))
+})
 
-router.delete("/", (request, response) => {
+router.delete('/', (request, response) => {
   shoppingcart
-    .findByIdAndDelete(request.body.productId)
-    .then(() => response.json({ deleted: true }));
-});
+    .findByIdAndDelete(request.body.itemId)
+    .then(() => response.json({ deleted: true }))
+})
 
-export default router;
+export default router
