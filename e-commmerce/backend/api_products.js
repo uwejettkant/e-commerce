@@ -1,21 +1,21 @@
-import { Router } from "express";
-import { products, categories } from "./models";
+import { Router } from 'express'
+import { products, categories } from './models'
 
-const router = Router();
+const router = Router()
 
-router.get("/", (request, response) => {
+router.get('/', (request, response) => {
   products.find().then((data) => {
-    response.json(data);
-  });
-});
+    response.json(data)
+  })
+})
 
-router.get("/filtered", (request, response) => {
+router.get('/filtered', (request, response) => {
   products.find(request.body.categoryId).then((data) => {
-    response.json(data);
-  });
-});
+    response.json(data)
+  })
+})
 
-router.post("/", (request, response) => {
+router.post('/', (request, response) => {
   products
     .create({
       name: request.body.name,
@@ -24,7 +24,7 @@ router.post("/", (request, response) => {
       categoryId: request.body.categoryId,
     })
     .then(() => response.json({ created: true }))
-    .catch(() => response.json({ created: false }));
-});
+    .catch(() => response.json({ created: false }))
+})
 
-export default router;
+export default router
